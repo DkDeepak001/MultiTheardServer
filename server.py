@@ -16,7 +16,7 @@ def multi_Server():
             read_ready, write_ready, error = sel.select(socketList, [], [])
             for sock in read_ready:
                 if sock == s:
-                    client_socket , addr = s.accept()
+                    client_socket, addr = s.accept()
                     socketList.append(client_socket)
                     print("Client {}:{} connected.".format(addr[0], addr[1]))
                     broadcast(s,client_socket, "{} entered our chatting room... \n".format(addr))
@@ -25,13 +25,14 @@ def multi_Server():
                         data = sock.recv(10)
                         data =data.decode()
                         if data:
-                            print(data)
+
+                            broadcast(s, sock, "[{}] {}".format(sock.getpeername(), data))
                         else:
-                            print("client {}: offline".format(addr[1]))
+                            broadcast(s, sock, "[{}] {}".format(sock.getpeername(), "Client is offline \n"))
                             if sock in socketList:
                                 socketList.remove(sock)
                     except:
-                        print("client Except")
+                        broadcast(s, sock, "[{}] {}".format(sock.getpeername(), "Client is offline, exception \n"))
                     continue
 
 def broadcast(server_socket, client_socket, message):
