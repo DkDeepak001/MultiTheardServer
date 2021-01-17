@@ -24,9 +24,8 @@ while True:
         data = "\n" + out.decode()
         conn.sendall((">"+ data).encode())
 
-
     else:
-        conn.sendall("no data printed")
+        conn.sendall("no data printed".encode())
 
 
 
