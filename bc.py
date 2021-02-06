@@ -58,8 +58,11 @@ s.bind((host, port))
 s.listen()
 print("listing on {}".format(port))
 while True:
-    con, addr = s.accept()
-    startFun(con)
+    try:
+        con, addr = s.accept()
+        startFun(con)
+    except:
+        pass
 s.close()
 
 
